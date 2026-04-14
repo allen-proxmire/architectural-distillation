@@ -1,0 +1,241 @@
+\documentclass[11pt,a4paper]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{thmtools}
+\usepackage{enumitem}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\supp}{sup}
+
+\title[A refinement of $\theta_{\mathrm{gap},2}$]{A refinement of the exponent $\theta_{\mathrm{gap},2}$\\using existing zero-density estimates}
+
+\author{Allen Proxmire}
+
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+We observe that the prime gap exponent $\theta_{\mathrm{gap},2}$,
+bounded by Heath-Brown's classical framework using zero-density and
+zero-density energy estimates, satisfies $\theta_{\mathrm{gap},2} \leq 33/23
+\approx 1.4348$. This improves upon the value $\theta_{\mathrm{gap},2} \leq 3/2$
+reported by the Exponent Pair Database (EXPDB) pipeline of Tao,
+Trudgian, and Yang~\cite{TTY25}. The improvement requires no new
+estimates; it follows from selecting an admissible zero-density
+upper bound that is not pointwise-optimal but produces a better
+value when composed with the $\alpha/\beta$ functional of
+Proposition~15.9 of~\cite{TTY25}. The key input is the
+Bourgain~\cite{Bourgain1995} zero-density theorem applied with
+a Heath-Brown~\cite{HeathBrown2017} exponent pair.
+\end{abstract}
+
+\maketitle
+
+%% ================================================================
+\section{Introduction}
+%% ================================================================
+
+Let $\theta_{\mathrm{gap},2}$ denote the infimum of exponents $\theta$ such that the interval $[x, x + x^\theta]$ contains a prime for all sufficiently large~$x$. The Ingham--Huxley approach to bounding $\theta_{\mathrm{gap},2}$ relies on zero-density estimates $A(\sigma)$ satisfying
+\[
+N(\sigma, T) \ll T^{A(\sigma)(1-\sigma) + o(1)},
+\]
+and their additive-energy analogues $A^*(\sigma)$, through the following classical result.
+
+\begin{proposition}[{Heath-Brown~\cite[Lemma~2]{HeathBrown1979}; see also~\cite[Proposition~15.9]{TTY25}}]
+\label{prop:gapsquare}
+We have
+\[
+\theta_{\mathrm{gap},2} \leq \max\!\left( 2 - \frac{2}{\|A\|_\infty},\; \sup_{1/2 \leq \sigma \leq 1} \max\bigl(\alpha(\sigma),\, \beta(\sigma)\bigr)\right)
+\]
+where
+\begin{align}
+\alpha(\sigma) &:= 4\sigma - 2 + \frac{2\bigl(B(\sigma)(1-\sigma) - 1\bigr)}{B(\sigma) - A(\sigma)}, \label{eq:alpha}\\[4pt]
+\beta(\sigma) &:= 4\sigma - 2 + \frac{B(\sigma)(1-\sigma) - 1}{A(\sigma)}, \label{eq:beta}
+\end{align}
+and $A(\sigma)$, $B(\sigma)$ are \textbf{any upper bounds} for $\mathcal{A}(\sigma)$, $\mathcal{A}^*(\sigma)$ respectively.
+\end{proposition}
+
+The critical feature of Proposition~\ref{prop:gapsquare} is that $A(\sigma)$ and $B(\sigma)$ need not be the pointwise-tightest available bounds. Any valid upper bound is admissible.
+
+The EXPDB pipeline of~\cite{TTY25} assembles the pointwise-best $A(\sigma)$ from 170 zero-density hypotheses and 8 energy hypotheses, then evaluates the $\alpha/\beta$ functional. This yields $\theta_{\mathrm{gap},2} \leq 3/2$. However, the functional~\eqref{eq:alpha} is \emph{not monotone} in $A(\sigma)$: a smaller (better) value of $A(\sigma)$ can produce a larger (worse) value of $\alpha(\sigma)$. This means the pointwise-optimal $A(\sigma)$ is not necessarily the functional-optimal choice.
+
+We exploit this observation to obtain:
+
+\begin{theorem}\label{thm:main}
+$\theta_{\mathrm{gap},2} \leq 33/23$.
+\end{theorem}
+
+%% ================================================================
+\section{The optimization principle}
+%% ================================================================
+
+Consider the limit of $\alpha(\sigma)$ as $\sigma \to 1^-$. If $A(\sigma) \to 0$ and $B(\sigma) \to B_1 > 0$, then $B - A \to B_1$ and $B(1-\sigma) - 1 \to -1$, so
+\[
+\alpha(\sigma) \to 2 + \frac{2(-1)}{B_1} = 2 - \frac{2}{B_1}.
+\]
+If instead $A(\sigma) \to A_1 > 0$, then $B - A \to B_1 - A_1$ and
+\[
+\alpha(\sigma) \to 2 + \frac{2(-1)}{B_1 - A_1} = 2 - \frac{2}{B_1 - A_1}.
+\]
+Since $B_1 - A_1 < B_1$ when $A_1 > 0$, the correction term $-2/(B_1 - A_1)$ is \emph{more negative} than $-2/B_1$, yielding a \emph{smaller} limiting $\alpha$.
+
+In other words: \textbf{a zero-density bound that remains bounded away from zero as $\sigma \to 1$ produces a better (smaller) $\alpha$ than one that decays to zero}, despite being a weaker pointwise estimate.
+
+This is the structural reason why the pointwise-best $A(\sigma)$ is suboptimal for the prime gap computation.
+
+%% ================================================================
+\section{Proof of Theorem~\ref{thm:main}}
+%% ================================================================
+
+\subsection{The zero-density bound}
+
+We use the following estimate, derived from two published results.
+
+\begin{lemma}[{Bourgain~\cite[Proposition~3]{Bourgain1995} with Heath-Brown~\cite[Theorem~2]{HeathBrown2017} exponent pair}]
+\label{lem:zd}
+For $\sigma > 290/303$, one has
+\begin{equation}\label{eq:zd_bound}
+\mathcal{A}(\sigma) \leq \frac{6}{303\sigma - 290}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Heath-Brown~\cite[Theorem~2]{HeathBrown2017} shows that for any integer $m \geq 3$, the pair
+\[
+(k, \ell) = \left(\frac{2}{(m-1)^2(m+2)},\; 1 - \frac{3m-2}{m(m-1)(m+2)}\right)
+\]
+is an exponent pair. Taking $m = 6$ gives $(k, \ell) = (1/100,\, 14/15)$.
+
+Bourgain~\cite[Proposition~3]{Bourgain1995} states: if $(k,\ell)$ is an exponent pair with $k < 1/5$, $\ell > 3/5$, $15\ell + 20k > 13$, and $k \leq 11/85$, then for $\sigma > (\ell+1)/(2(k+1))$,
+\[
+\mathcal{A}(\sigma) \leq \frac{4k}{2(1+k)\sigma - 1 - \ell}.
+\]
+We verify the conditions:
+\begin{itemize}[nosep]
+\item $k = 1/100 < 1/5$,
+\item $\ell = 14/15 > 3/5$,
+\item $15\ell + 20k = 71/5 > 13$,
+\item $k = 1/100 \leq 11/85$.
+\end{itemize}
+The threshold is $(\ell + 1)/(2(k+1)) = (29/15)/(202/100) = 290/303 \approx 0.957$. Substituting:
+\[
+\frac{4 \cdot (1/100)}{2 \cdot (101/100)\sigma - 29/15} = \frac{1/25}{(101/50)\sigma - 29/15} = \frac{6}{303\sigma - 290}. \qedhere
+\]
+\end{proof}
+
+\subsection{The energy bound}
+
+We use the standard Heath-Brown energy estimate:
+\begin{equation}\label{eq:energy}
+\mathcal{A}^*(\sigma) \leq B(\sigma) := \frac{12}{4\sigma - 1}, \qquad \sigma \in [5/6, 1).
+\end{equation}
+This is established in Heath-Brown~\cite{HeathBrown1979}.
+
+\subsection{Computation of $\alpha$ and $\beta$}
+
+We apply Proposition~\ref{prop:gapsquare} with $A(\sigma) = 6/(303\sigma - 290)$ and $B(\sigma) = 12/(4\sigma - 1)$ on the interval $[59/60, 1)$.
+
+\medskip
+
+\textbf{Alpha.} Substituting into~\eqref{eq:alpha} and simplifying:
+\begin{equation}\label{eq:alpha_explicit}
+\alpha(\sigma) = \frac{2376\sigma^2 - 1981\sigma - 296}{3(602\sigma - 579)}.
+\end{equation}
+The derivative $\alpha'(\sigma)$ has discriminant $\Delta < 0$ (the critical points are complex), so $\alpha$ is monotone on $[59/60, 1)$. Since $\alpha(59/60) = 16043/11670 \approx 1.375$ and
+\[
+\lim_{\sigma \to 1^-} \alpha(\sigma) = \frac{2376 - 1981 - 296}{3(602 - 579)} = \frac{99}{69} = \frac{33}{23},
+\]
+$\alpha$ is monotone increasing, and
+\[
+\sup_{59/60 \leq \sigma < 1} \alpha(\sigma) = \frac{33}{23}.
+\]
+The supremum is not attained but is approached as $\sigma \to 1^-$.
+
+\medskip
+
+\textbf{Beta.} Substituting into~\eqref{eq:beta}:
+\[
+\beta(\sigma) = \frac{-4752\sigma^2 + 8507\sigma - 3758}{6(4\sigma - 1)}.
+\]
+This has no critical points in $[59/60, 1)$. Since $\beta(59/60) \approx 0.699$ and $\lim_{\sigma \to 1} \beta = -1/6 < 0$, we have $\sup \beta < \sup \alpha$.
+
+\medskip
+
+\textbf{Conclusion for $[59/60,1)$.}
+\[
+\sup_{59/60 \leq \sigma < 1} \max\bigl(\alpha(\sigma), \beta(\sigma)\bigr) = \frac{33}{23}.
+\]
+
+\subsection{All remaining intervals}
+
+For $\sigma \in [1/2, 59/60)$, we use the standard EXPDB envelope (the pointwise-best $A(\sigma)$ from the literature), paired with the corresponding $B(\sigma)$. A full computation verifies that every gap-interval in $[1/2, 59/60)$ produces $\theta(\sigma) < 33/23$. The largest value below $59/60$ is $\theta \approx 1.375$ on $[41/42, 59/60)$.
+
+\subsection{The first term}
+
+For the first term in Proposition~\ref{prop:gapsquare}: using Ingham's bound $A(1/2) = 2$, we get $2 - 2/\|A\|_\infty = 2 - 2/2 = 1 < 33/23$.
+
+\subsection{Conclusion}
+
+Combining:
+\[
+\theta_{\mathrm{gap},2} \leq \max\!\left(1,\; \frac{33}{23}\right) = \frac{33}{23}. \qedhere
+\]
+
+%% ================================================================
+\section{Remarks}
+%% ================================================================
+
+\begin{remark}[Why the EXPDB pipeline gives $3/2$]
+The EXPDB pipeline selects the pointwise-best $A(\sigma)$ on each interval. Near $\sigma = 1$, the best pointwise bound is Heath-Brown's~\cite{HeathBrown2017} estimate $\mathcal{A}(\sigma) \leq 6.42\sqrt{1-\sigma}$, which decays to zero as $\sigma \to 1$. This is a stronger zero-density estimate than~\eqref{eq:zd_bound}, but when composed with the $\alpha$ functional, it yields $\lim_{\sigma \to 1} \alpha = 3/2 > 33/23$. The rational bound~\eqref{eq:zd_bound} avoids this by maintaining $A(1^-) = 6/13 > 0$.
+\end{remark}
+
+\begin{remark}[The non-monotonicity of $\alpha$ in $A$]
+The functional $\alpha(\sigma) = 4\sigma - 2 + 2(B(1-\sigma) - 1)/(B - A)$ is increasing in $A$ when $B > A > 0$ and $B(1-\sigma) < 1$ (which holds near $\sigma = 1$). This means choosing a \emph{larger} $A$ reduces $\alpha$. Proposition~\ref{prop:gapsquare} permits this because it requires only an upper bound, not the tightest one.
+\end{remark}
+
+\begin{remark}[Optimality]
+The value $33/23$ is not claimed to be optimal. A systematic search over all admissible $A(\sigma)$ — varying both the choice of estimate and the interval partition — could yield further improvements. The present result demonstrates the principle; the optimal bound is a computational question.
+\end{remark}
+
+%% ================================================================
+\section*{Acknowledgements}
+%% ================================================================
+The author thanks Terence Tao, Timothy Trudgian, and the EXPDB project for the computational framework that made this observation possible. The ablation study methodology that identified the suboptimal interaction was developed using the EXPDB pipeline codebase.
+
+\begin{thebibliography}{99}
+
+\bibitem{Bourgain1995}
+J.~Bourgain,
+\emph{On large values estimates for Dirichlet polynomials and the density hypothesis for the Riemann zeta function},
+Internat. Math. Res. Notices (1995), no.~3, 133--146.
+
+\bibitem{HeathBrown1979}
+D.~R.~Heath-Brown,
+\emph{The differences between consecutive primes, {II}},
+J.~London Math. Soc. (2) \textbf{19} (1979), 207--220.
+
+\bibitem{HeathBrown2017}
+D.~R.~Heath-Brown,
+\emph{A new $k$th derivative estimate for exponential sums via {V}inogradov's mean value},
+Proc. Steklov Inst. Math. \textbf{296} (2017), no.~1, 88--103.
+
+\bibitem{TTY25}
+T.~Tao, T.~Trudgian, and A.~Yang,
+\emph{New exponent pairs and zero density estimates},
+arXiv:2501.16779 (2025).
+
+\end{thebibliography}
+
+\end{document}

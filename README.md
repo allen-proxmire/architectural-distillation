@@ -1,79 +1,316 @@
-# Architectural Distillation of Multiplicative Processes (AD)
+# Architectural Distillation (AD)
 
-Architectural Distillation (AD) is a general, reusable methodology for extracting structure from systems composed of interacting mechanisms. Given any such system — a partial differential equation, a dynamical system, a geometric structure, an arithmetic process, a computational architecture — AD produces a standardized structural profile: a channel decomposition, an envelope of constraints, a constraint-surface geometry, a pole classification, and an evaluation against six structural criteria. AD is not tied to any specific mathematical domain. It is a reproducible, extensible framework that can be applied step-by-step to new systems by any practitioner.
+**A Domain-Agnostic Methodology for Evaluating the Structural Integrity of Mathematical and Computational Systems**
 
----
-
-## The Four Pillars
-
-| Pillar | Description |
-|---|---|
-| **Generalizable** | AD applies to any system that can be decomposed into interacting mechanisms. It is a methodology, not a theory. |
-| **Architectural** | AD identifies channels, envelopes, constraint surfaces, invariants, and poles. It analyzes structure, not solutions. |
-| **Reproducible** | AD is a step-by-step process that produces consistent, testable outputs. Two practitioners analyzing the same system arrive at the same profile. |
-| **Extensible** | AD grows as new systems are analyzed. New channel types, poles, and surface types extend the taxonomy without revising the core. |
+Allen Proxmire, 2026
 
 ---
 
-## What AD Is Not
+## Abstract
 
-- AD is **not** a mathematical theory. It does not prove theorems.
-- AD is **not** a collection of proofs. Proofs belong to the domain-specific theories AD analyzes.
-- AD is **not** tied to the Factor Skyline or any specific domain.
-- AD is **not** a dumping ground for artifacts from any project.
-
-AD is a clean, standalone methodological framework.
+Architectural Distillation (AD) is a systematic evaluation process that determines whether a mathematical or computational system is structurally well-formed. AD operates by extracting constraints from a system's axioms, governing equations, and component interactions through a three-mode process, then testing the resulting architecture against six structural criteria: minimality, locality, determinism, generative sufficiency, envelope tightness, and structural optimality. AD evaluates *architectures*, not empirical content. It answers "is this system well-built?" rather than "does it match data?" The methodology is domain-agnostic: it applies identically to partial differential equations, computational pipelines, field theories, and any system expressible through axioms, evolution rules, and interacting components.
 
 ---
 
-## Relationship to the Factor Skyline
+## Table of Contents
+
+1. [What AD Is (and What It Is Not)](#1-what-ad-is-and-what-it-is-not)
+2. [The Six Criteria](#2-the-six-criteria)
+3. [The Three-Mode Extraction Process](#3-the-three-mode-extraction-process)
+4. [The Constraint Census](#4-the-constraint-census)
+5. [Repo Structure](#5-repo-structure)
+6. [Catalog of Completed Evaluations](#6-catalog-of-completed-evaluations)
+7. [Getting Started](#7-getting-started)
+8. [Lineage: AD, Factor Skyline, and X5D](#8-lineage-ad-factor-skyline-and-x5d)
+9. [Contributing](#9-contributing)
+
+---
+
+## 1. What AD Is (and What It Is Not)
+
+**AD is a structural assessment.** It takes a system defined by axioms, evolution rules, and interacting components, then determines whether the system's architecture is minimal, local, deterministic, generatively sufficient, envelope-tight, and structurally optimal. The assessment is purely internal: it examines whether the parts fit together correctly, whether the constraints are tight, and whether the architecture could be simplified without losing its generative power.
+
+**AD is not scientific validation.** It does not compare a system's predictions to experimental data, fit parameters to observations, or judge whether a model describes reality. A system can pass all six AD criteria and still be empirically wrong -- it would be a well-built system that describes a world different from ours. Conversely, an empirically successful model can fail AD criteria if it matches data through loose, redundant, or non-minimal structure.
+
+**AD is not a proof system.** It does not prove theorems about the target system. It uses known mathematical results (well-posedness theory, comparison principles, energy estimates, entropy methods) as inputs, then evaluates the architectural implications of those results. AD synthesizes existing mathematics into a structural verdict; it does not generate new mathematics.
+
+**AD is domain-agnostic.** The same six criteria and three-mode extraction process apply to any system that can be decomposed into axioms, evolution rules, and interacting components. The completed evaluations span parabolic, hyperbolic, and mixed-type PDEs, degenerate and non-degenerate diffusions, geometric flows, scalar field ontologies, and computational pipelines. The methodology does not change across domains; only the technical content of each mode changes.
+
+**AD produces a definite verdict.** Each criterion receives one of three outcomes: PASS, CONDITIONAL, or FAIL. PASS means the criterion is satisfied without qualification. CONDITIONAL means the criterion is satisfied subject to stated restrictions (e.g., parameter ranges, dimensional constraints, regularity assumptions). FAIL means the criterion is not satisfied. The six individual verdicts constitute the system's AD profile.
+
+---
+
+## 2. The Six Criteria
+
+Each criterion is stated as a question about the target architecture. The evaluation must produce a definite answer (PASS, CONDITIONAL, or FAIL) with explicit justification referencing the constraints extracted in the three-mode process.
+
+### 2.1 Minimality
+
+**Question:** Does the architecture contain any redundant axioms, operators, parameters, or channels?
+
+**What it measures:** Whether every component of the architecture does independent structural work. An axiom is redundant if it can be derived from the remaining axioms. An operator is redundant if removing it does not change the set of solutions. A parameter is redundant if it can be absorbed by rescaling. A channel is redundant if its effect is already produced by other channels.
+
+- **PASS:** Every axiom is independent. Every operator is necessary. Every parameter is irreducible. Every channel produces effects not generated by other channels. The architecture has no structural fat.
+- **CONDITIONAL:** The architecture is minimal after removing a small number of explicitly identified redundancies that do not affect the structural conclusions.
+- **FAIL:** The architecture contains axioms, operators, or channels that are genuinely redundant -- their removal simplifies the system without reducing its generative power, and the redundancy is not merely presentational.
+
+### 2.2 Locality
+
+**Question:** Do all constraints and interactions in the architecture act through local couplings?
+
+**What it measures:** Whether the evolution at a point depends only on the state and its derivatives at that point (or in an infinitesimal neighborhood), as opposed to depending on global integrals, nonlocal operators, or values at distant points.
+
+- **PASS:** All operators, couplings, and constraints are strictly local. The evolution at each point depends only on the local state and its spatial derivatives.
+- **CONDITIONAL:** The architecture is predominantly local but contains a quarantined nonlocal sector -- a specific operator or constraint that is nonlocal in formulation but whose nonlocality is structurally necessary and confined (e.g., a pressure Poisson equation in incompressible flow). The nonlocal sector must be identified, its structural role explained, and its confinement demonstrated.
+- **FAIL:** The architecture requires nonlocal interactions that are neither quarantined nor structurally justified.
+
+### 2.3 Determinism
+
+**Question:** Does initial data uniquely determine the system's evolution for all time?
+
+**What it measures:** Whether the architecture, together with appropriate initial and boundary conditions, produces a unique solution trajectory. This is the structural analogue of well-posedness: existence, uniqueness, and continuous dependence on data.
+
+- **PASS:** For all admissible initial data, the architecture produces a unique global-in-time solution. The well-posedness is unconditional.
+- **CONDITIONAL:** Well-posedness holds subject to stated restrictions -- small data, specific dimensions, specific regularity classes, or finite time horizons. The restrictions must be precisely identified.
+- **FAIL:** The architecture does not guarantee unique evolution. Either existence fails, uniqueness fails, or the well-posedness question is fundamentally open and unresolved.
+
+### 2.4 Generative Sufficiency
+
+**Question:** Does the architecture generate all the laws, behaviors, and phenomena it is supposed to produce?
+
+**What it measures:** Whether the axioms and evolution rules are sufficient to derive all target behaviors of the system. For a PDE, this means deriving conservation laws, decay estimates, stability results, pattern formation, front propagation, and all other known analytical results from the architecture's axioms alone.
+
+- **PASS:** Every target law and behavior is derivable from the architecture. There is zero gap between what the architecture claims to produce and what can be extracted from its axioms and evolution rules.
+- **CONDITIONAL:** Most target behaviors are derivable, but a small number require auxiliary assumptions not contained in the axioms.
+- **FAIL:** Significant target behaviors cannot be derived from the architecture. The axioms are insufficient to generate the claimed phenomenology.
+
+### 2.5 Envelope Tightness
+
+**Question:** Are the system's bounds tight -- saturated by actual solutions or configurations -- rather than loose?
+
+**What it measures:** Whether the inequalities, bounds, and constraints extracted in the three-mode process are sharp. An envelope bound is tight if there exists a solution or configuration that saturates it (achieves equality).
+
+- **PASS:** All envelope bounds are tight. Every inequality extracted in Modes 1-3 is saturated by an explicit solution, configuration, or limiting case.
+- **CONDITIONAL:** Most bounds are tight, but a small number are known to be loose or have unknown sharpness.
+- **FAIL:** A significant fraction of the envelope bounds are loose. The architecture's constraints do not tightly characterize its behavior.
+
+### 2.6 Structural Optimality
+
+**Question:** Is there a simpler architecture that produces the same set of laws and behaviors?
+
+**What it measures:** Whether the architecture is the simplest structure capable of its generative output. This is the most demanding criterion: it requires not just that the architecture works, but that no simpler architecture could do the same job.
+
+- **PASS:** No simpler architecture can generate the same set of laws. Removing any axiom, parameter, or channel either eliminates a target behavior or introduces a structural anomaly.
+- **CONDITIONAL:** The architecture is near-optimal but contains identifiable structural anomalies -- features that add complexity without clear generative payoff.
+- **FAIL:** A simpler architecture exists that produces the same generative output. The current architecture carries unnecessary structural weight.
+
+---
+
+## 3. The Three-Mode Extraction Process
+
+AD extracts constraints through three complementary modes, each operating on a different structural layer of the target system. The modes are sequential: Mode 1 operates on the axioms alone, Mode 2 on the governing equations, and Mode 3 on the interaction structure. Each mode produces a specific class of constraints.
+
+### 3.1 Mode 1: Axiom to Envelope
+
+**Input:** The system's axiom set -- the foundational assumptions, field hypotheses, symmetry requirements, structural conditions, and constitutive choices that define the architecture.
+
+**Process:** Derive, from the axioms alone (without solving any equations):
+
+- **Forbidden configurations:** States or parameter combinations that the axioms exclude a priori.
+- **Necessary configurations:** States or features that the axioms force into existence.
+- **Envelope inequalities:** Bounds on state variables, parameters, or derived quantities that follow from the axioms by logical or algebraic argument.
+- **Structural invariants:** Quantities preserved by the architecture's structure, derivable from the axioms without reference to specific solutions.
+
+**Output:** A numbered list of envelope constraints (labeled E1, E2, ..., En), each with a precise statement, derivation sketch, and classification as forbidden, necessary, bounding, or invariant.
+
+**Key principle:** Mode 1 constraints hold for *all* solutions of the system. They are consequences of the architecture, not of particular initial data or parameter choices.
+
+### 3.2 Mode 2: Governing Equations to Extremal Dynamics
+
+**Input:** The system's governing equations -- the PDE, ODE, algebraic system, or computational pipeline that defines the system's evolution or transformation rules.
+
+**Process:** Derive, from the governing equations (using the axioms as background):
+
+- **Front speeds and propagation rates:** How fast information, interfaces, or disturbances travel through the system.
+- **Decay rates:** How solutions approach equilibrium, how perturbations die out, how energy dissipates.
+- **Stability conditions:** Under what conditions solutions are stable or unstable.
+- **Blow-up exclusion or characterization:** Whether solutions can develop singularities in finite time, and if so, the precise conditions and rates.
+- **Universal inequalities:** Relationships between system quantities that hold for all solutions.
+
+**Output:** A numbered list of extremal-dynamics constraints (labeled U1, U2, ..., Un), each with a precise statement, derivation from the governing equations, and classification by type.
+
+**Key principle:** Mode 2 constraints capture the *dynamic* content of the architecture -- what the equations force upon all solutions. Where Mode 1 is static (what the axioms imply), Mode 2 is dynamic (what the evolution enforces).
+
+### 3.3 Mode 3: Channels to Constraint Surface
+
+**Input:** The system's channel structure -- the distinct mechanisms, operators, or pathways through which components of the system interact. Channels are the irreducible interaction pathways: diffusion, advection, reaction, dissipation, coupling, and so on.
+
+**Process:** Derive, from the interaction structure of the channels (using axioms and equations as background):
+
+- **Impossible channel combinations:** Pairs or sets of channel states that cannot coexist.
+- **Forced channel combinations:** If certain channels are active, other channels must also be active.
+- **Universality classes:** Groups of systems that share the same channel-constraint pattern.
+- **Channel constraints:** Quantitative relationships between channel strengths, coupling constants, or interaction rates that must hold for the architecture to be self-consistent.
+
+**Output:** A numbered list of channel constraints (labeled C1, C2, ..., Cn), each with a precise statement, derivation from the channel structure, and classification as impossible, forced, universality, or quantitative.
+
+**Key principle:** Mode 3 constraints capture the *relational* structure of the architecture -- how the components constrain each other. Where Mode 1 is about axioms and Mode 2 is about equations, Mode 3 is about the interaction topology.
+
+---
+
+## 4. The Constraint Census
+
+The constraint census is a quantitative summary of the constraints extracted across all three modes. It measures the architectural rigidity of the target system.
+
+### 4.1 Census Components
+
+| Quantity | Definition |
+|----------|------------|
+| **Total constraints** | The sum of all constraints extracted: envelope constraints (E), universal inequalities (U), and channel constraints (C). Total = \|E\| + \|U\| + \|C\|. |
+| **Independent constraints** | The number of constraints that are logically independent -- not derivable from any subset of the others. This requires checking for redundancy across modes. |
+| **Free parameters** | The number of free parameters, constitutive constants, and independent initial-data specifications that the architecture allows. |
+| **Overdetermination ratio** | Independent constraints divided by free parameters. |
+
+### 4.2 Interpreting the Overdetermination Ratio
+
+| Ratio | Interpretation |
+|-------|---------------|
+| **Ratio > 1** (overdetermined) | The architecture has more independent constraints than free parameters. The constraints are *predictive*: they force relationships between quantities that would otherwise be independent. The system is rigid -- its behavior is tightly controlled by its structure. |
+| **Ratio = 1** (critically determined) | The constraints exactly match the degrees of freedom. The system is fully determined but has no predictive surplus. |
+| **Ratio < 1** (underdetermined) | The architecture has fewer constraints than free parameters. There is *slack* -- some degrees of freedom are unconstrained. The system has structural looseness. |
+
+---
+
+## 5. Repo Structure
+
+| Directory | Purpose |
+|-----------|---------|
+| [`ad_core/`](ad_core/) | Core concepts: principles and motivation (`01`), channel taxonomy (`02`), geometry of envelopes, constraint surfaces, and poles (`03`), evaluation criteria definitions (`04`), and examples overview (`05`) |
+| [`ad_process/`](ad_process/) | The six-step AD protocol: identify architecture, derive envelope (Mode 1), identify extremal dynamics (Mode 2), construct constraint surface (Mode 3), validate and evaluate, generalize |
+| [`ad_examples/`](ad_examples/) | Worked examples: the PDE Atlas (14 evaluations), the EGS Pipeline evaluation, and the Event Density evaluation |
+| [`docs/`](docs/) | Overview, full methodology description, FAQ, and the PDE Atlas paper |
+
+### Theoretical Foundations (`ad_core/`)
+
+| Document | Content |
+|----------|---------|
+| [`01_principles.md`](ad_core/01_principles.md) | Motivation: the structural gap between domain-specific analysis and cross-domain comparison. The four pillars (generalizable, architectural, reproducible, extensible). |
+| [`02_pipeline.md`](ad_core/02_pipeline.md) | Channel taxonomy: diffusion, dispersion, transport, curvature, aggregation, pressure, reaction, conservation, gauge. Channel properties (locality, linearity, stability role, scale action). |
+| [`03_geometry.md`](ad_core/03_geometry.md) | Envelopes, constraint surfaces, and poles. Closed vs. open envelopes. Structural poles (diffusive, hyperbolic, dispersive, geometric, aggregation, fluid, integrable). |
+| [`04_invariants.md`](ad_core/04_invariants.md) | Detailed treatment of the six evaluation criteria. Scoring methodology. |
+| [`05_examples_overview.md`](ad_core/05_examples_overview.md) | Survey of completed evaluations, the atlas concept, and guidelines for contributing new examples. |
+
+### Step-by-Step Protocol (`ad_process/`)
+
+| Step | Document | Mode |
+|------|----------|------|
+| 1 | [`step1_identify_multiplicative_structure.md`](ad_process/step1_identify_multiplicative_structure.md) | -- |
+| 2 | [`step2_extract_axes.md`](ad_process/step2_extract_axes.md) | Mode 1 |
+| 3 | [`step3_construct_skyline.md`](ad_process/step3_construct_skyline.md) | Mode 2 |
+| 4 | [`step4_distill_invariants.md`](ad_process/step4_distill_invariants.md) | Mode 3 |
+| 5 | [`step5_validate.md`](ad_process/step5_validate.md) | -- |
+| 6 | [`step6_generalize.md`](ad_process/step6_generalize.md) | -- |
+
+### Reference Documents (`docs/`)
+
+| Document | Content |
+|----------|---------|
+| [`AD_overview.md`](docs/AD_overview.md) | Comprehensive introduction: what AD is, core concepts, the six-step process, and origins. |
+| [`AD_methodology.md`](docs/AD_methodology.md) | The complete end-to-end process in one document, including the standard five-document output specification. |
+| [`AD_FAQ.md`](docs/AD_FAQ.md) | Answers to common questions about AD, its relationship to the Factor Skyline, and how to get started. |
+| [`AD_PDE_Atlas_Paper.md`](docs/AD_PDE_Atlas_Paper.md) | The PDE Atlas paper: a structural classification of sixteen nonlinear PDEs using the AD framework. |
+
+---
+
+## 6. Catalog of Completed Evaluations
+
+### PDE Atlas (14 evaluations)
+
+Each evaluation follows the five-document format: Architectural Specification, Mode 1 Envelope, Mode 2 Extremal Dynamics, Mode 3 Channel Surface, and Criteria Verdict. All are located under [`ad_examples/example_PDE_Atlas/`](ad_examples/example_PDE_Atlas/).
+
+| # | System | Type | Pole | Location |
+|---|--------|------|------|----------|
+| 1 | Allen-Cahn | Parabolic, bistable reaction-diffusion | Diffusive | `AllenCahn/` |
+| 2 | Burgers (inviscid) | Hyperbolic, scalar conservation law | Hyperbolic | `Burgers/` |
+| 3 | Cahn-Hilliard | Fourth-order parabolic, phase separation | Diffusive | `CahnHilliard/` |
+| 4 | Fokker-Planck | Parabolic, drift-diffusion | Diffusive | `FokkerPlanck/` |
+| 5 | Hamilton-Jacobi | Hyperbolic, potential formulation | Hyperbolic | `HamiltonJacobi/` |
+| 6 | KdV | Dispersive, integrable | Integrable | `KdV/` |
+| 7 | Keller-Segel | Parabolic, chemotaxis | Aggregation | `KellerSegel/` |
+| 8 | Mean Curvature Flow | Geometric, degenerate parabolic | Geometric | `MeanCurvatureFlow/` |
+| 9 | Navier-Stokes (3D) | Mixed, incompressible fluid | Fluid | `NavierStokes/` |
+| 10 | NLS | Dispersive, Hamiltonian | Dispersive | `NLS/` |
+| 11 | Porous Medium | Degenerate parabolic, nonlinear diffusion | Diffusive | `PorousMedium/` |
+| 12 | Reaction-Diffusion | Parabolic, general reaction-diffusion | Diffusive | `ReactionDiffusion/` |
+| 13 | Ricci Flow | Geometric, curvature evolution | Geometric | `RicciFlow/` |
+| 14 | Thin Film | Fourth-order degenerate parabolic | Diffusive | `ThinFilm/` |
+
+### Non-PDE Evaluations
+
+| # | System | Type | Location |
+|---|--------|------|----------|
+| 15 | Event Density | Scalar field ontology, degenerate parabolic | [`ad_examples/AD_Evaluation_EventDensity.md`](ad_examples/AD_Evaluation_EventDensity.md) |
+| 16 | EGS Pipeline (EXPDB) | Computational exponent-database pipeline | [`ad_examples/example_EGS_Skyline/`](ad_examples/example_EGS_Skyline/) |
+
+---
+
+## 7. Getting Started
+
+The recommended entry point for understanding AD in practice is the **Burgers equation evaluation** ([`ad_examples/example_PDE_Atlas/Burgers/`](ad_examples/example_PDE_Atlas/Burgers/)).
+
+### Why Burgers
+
+The inviscid Burgers equation is the cleanest worked example for several reasons. It is a single scalar conservation law in one spatial dimension with zero constitutive parameters, three channels, and eight axioms (seven independent). All five documents are fully worked, all six criteria are assessed, and the constraint census is complete. Burgers achieves 5 PASS + 1 CONDITIONAL, tying for the strongest PDE profile in the Atlas. It has exactly one redundant axiom (hyperbolic orientation, derivable from the conservation-law axiom), making the minimality analysis transparent. It is fully local, unconditionally deterministic, and has zero structural anomalies.
+
+### Recommended Reading Order
+
+1. **Understand the concepts.** Start with [`ad_core/01_principles.md`](ad_core/01_principles.md) for motivation, then [`ad_core/02_pipeline.md`](ad_core/02_pipeline.md) for the channel taxonomy, and [`ad_core/03_geometry.md`](ad_core/03_geometry.md) for envelopes, constraint surfaces, and poles.
+
+2. **Study the Burgers evaluation.** Read the five documents in order:
+   - `FS_Eval_Burgers_01_ArchitectureSpec.md` -- how an architecture is decomposed into axioms, operators, parameters, and channels.
+   - `FS_Eval_Burgers_02_Mode1_Envelope.md` -- how envelope constraints are extracted from axioms alone.
+   - `FS_Eval_Burgers_03_Mode2_ExtremalDynamics.md` -- how universal inequalities are derived from the governing equation.
+   - `FS_Eval_Burgers_04_Mode3_ChannelSurface.md` -- how channel constraints are derived from the interaction structure.
+   - `FS_Eval_Burgers_05_FS_Criteria_Verdict.md` -- how the six criteria are applied and the constraint census is compiled.
+
+3. **Follow the process.** The six-step protocol in [`ad_process/`](ad_process/) provides the detailed instructions for each step.
+
+4. **Apply it yourself.** Verify that your system meets the input requirements (axiomatizability, explicit evolution rules, identifiable interaction structure, sufficient mathematical development). Work through the steps sequentially, using the Burgers evaluation as a template.
+
+### Running AD on a New System
+
+Every AD evaluation produces exactly five documents:
+
+| Document | Content |
+|----------|---------|
+| `_01_ArchitectureSpec.md` | Axiom enumeration, operator catalog, parameter inventory, channel decomposition, governing equations |
+| `_02_Mode1_Envelope.md` | Forbidden configurations, necessary configurations, envelope inequalities, structural invariants |
+| `_03_Mode2_ExtremalDynamics.md` | Propagation analysis, decay rates, stability analysis, blow-up characterization, universal inequalities |
+| `_04_Mode3_ChannelSurface.md` | Channel interaction table, impossible/forced combinations, universality classes, channel constraints |
+| `_05_FS_Criteria_Verdict.md` | Six-criteria assessment (PASS / CONDITIONAL / FAIL for each), verdict summary, constraint census |
+
+---
+
+## 8. Lineage: AD, Factor Skyline, and X5D
 
 AD was extracted from the [Factor Skyline](https://github.com/allen-proxmire/factor-skyline) (FS) project. FS is a mathematical theory about the multiplicative structure of the integers. AD is the upstream methodology that was used to build FS and was then recognized as general enough to stand on its own. FS is one *instance* of AD; the PDE Atlas is another.
 
----
+The EGS Pipeline evaluation is historically significant: applying AD to the EXPDB pipeline (the Analytic Number Theory Exponent Database of Tao, Trudgian, and Yang) revealed that the pipeline operates on a single five-dimensional rational polytope. This structural finding became the [X5D framework](https://github.com/allen-proxmire/x5d-expdb-framework), published as a separate project. AD is the evaluation process; X5D was one of its outputs -- a case where architectural distillation uncovered latent structure that was not visible before the evaluation.
 
-## Getting Started
+The relationship:
 
-1. **Understand the concepts:** Start with [`ad_core/01_principles.md`](ad_core/01_principles.md) for motivation, then [`ad_core/02_pipeline.md`](ad_core/02_pipeline.md) for the channel taxonomy, and [`ad_core/03_geometry.md`](ad_core/03_geometry.md) for envelopes, constraint surfaces, and poles.
-
-2. **Follow the process:** The six-step AD process is documented in [`ad_process/`](ad_process/), from identifying the architecture through generalization.
-
-3. **Study an example:** The [PDE Atlas](ad_examples/example_PDE_Atlas/) contains 14 complete worked examples showing AD applied to major nonlinear PDEs.
-
-4. **Apply it yourself:** Use the process steps and examples as templates to distill your own system.
+- **AD** is the methodology (this repo).
+- **Factor Skyline** is the originating application of AD to arithmetic.
+- **X5D** is a downstream product of AD applied to the EXPDB pipeline.
 
 ---
 
-## Repo Structure
+## 9. Contributing
 
-| Directory | Purpose |
-|---|---|
-| [`ad_core/`](ad_core/) | Core concepts: principles, channel taxonomy, geometry (envelopes, constraint surfaces, poles), evaluation criteria, and examples overview |
-| [`ad_process/`](ad_process/) | The six-step AD process: identify architecture, derive envelope, identify extremal dynamics, construct constraint surface, validate, generalize |
-| [`ad_examples/`](ad_examples/) | Worked examples of AD applied to real systems, including the PDE Atlas (14 evaluations) |
-| [`docs/`](docs/) | Overview, full methodology description, and FAQ |
-| `LICENSE` | License file |
-
----
-
-## Examples
-
-### The PDE Atlas
-
-14 nonlinear PDEs evaluated through the full AD process, covering seven structural poles: diffusive, hyperbolic, dispersive, geometric, aggregation, fluid, and integrable. See [`ad_examples/example_PDE_Atlas/`](ad_examples/example_PDE_Atlas/).
-
-### The Factor Skyline
-
-The originating example — AD applied to the multiplicative structure of the integers. See the [Factor Skyline repository](https://github.com/allen-proxmire/factor-skyline).
-
----
-
-## Contributing
-
-Contributions are welcome. The most valuable contribution is a new worked example — a system distilled through the full AD process.
+Contributions are welcome. The most valuable contribution is a new worked example -- a system distilled through the full AD process.
 
 **To contribute a new example:**
-1. Read the [AD Process Steps](ad_process/step1_identify_multiplicative_structure.md) and the [PDE Atlas](ad_examples/example_PDE_Atlas/README.md) for reference.
+1. Read the [AD Process Steps](ad_process/step1_identify_multiplicative_structure.md) and the [PDE Atlas](ad_examples/example_PDE_Atlas/) for reference.
 2. Apply the six-step process in [`ad_process/`](ad_process/) to your system.
 3. Produce the five standard documents (Architectural Specification, Mode 1, Mode 2, Mode 3, Criteria Verdict).
 4. Submit to `ad_examples/` via pull request.
@@ -81,3 +318,11 @@ Contributions are welcome. The most valuable contribution is a new worked exampl
 **Other contributions:** Improvements to documentation, corrections to existing content, and proposals for new channel types, poles, or surface types are also welcome. Please open an issue to discuss before submitting large changes.
 
 See [`ad_core/05_examples_overview.md`](ad_core/05_examples_overview.md) for detailed guidelines.
+
+---
+
+## License and Attribution
+
+Architectural Distillation was developed by Allen Proxmire. The methodology, criteria definitions, and extraction protocol described in this document are original work.
+
+When citing AD evaluations, reference the specific evaluation documents and this protocol specification.
