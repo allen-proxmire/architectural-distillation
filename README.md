@@ -10,6 +10,8 @@ Allen Proxmire, 2026
 
 Architectural Distillation (AD) is a systematic evaluation process that determines whether a mathematical or computational system is structurally well-formed. AD operates by extracting constraints from a system's axioms, governing equations, and component interactions through a three-mode process, then testing the resulting architecture against six structural criteria: minimality, locality, determinism, generative sufficiency, envelope tightness, and structural optimality. AD evaluates *architectures*, not empirical content. It answers "is this system well-built?" rather than "does it match data?" The methodology is domain-agnostic: it applies identically to partial differential equations, computational pipelines, field theories, and any system expressible through axioms, evolution rules, and interacting components.
 
+[![DOI](https://zenodo.org/badge/1202837916.svg)](https://doi.org/10.5281/zenodo.19562506)
+
 ---
 
 ## Table of Contents
