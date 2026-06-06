@@ -5,7 +5,7 @@
 **Status:** Pre-implementation; defines the build that §7 of the measurement plan calls for
 **Date filed:** June 2026
 **Author:** Allen Proxmire
-**Related:** `../Phase_Bits_DeterminabilityBoundaryMeasurementPlan.md` (the program); `../Phase_B_ArchitecturalSpecification.md` (axioms/rule); `../Phase_TieBreak_Specification.md` (tie-break); `../Phase_E_ConstraintSurface.md` §6 (reach strata / determinability boundary); `../Phase_OrientationPrimitivity_Resolution.md` (orientation = longitudinal-derivable + transverse-primitive)
+**Related:** `../../Phase_Bits_DeterminabilityBoundaryMeasurementPlan.md` (the program); `../../Phase_B_ArchitecturalSpecification.md` (axioms/rule); `../../Phase_TieBreak_Specification.md` (tie-break); `../../Phase_E_ConstraintSurface.md` §6 (reach strata / determinability boundary); `../../Phase_OrientationPrimitivity_Resolution.md` (orientation = longitudinal-derivable + transverse-primitive)
 
 ---
 

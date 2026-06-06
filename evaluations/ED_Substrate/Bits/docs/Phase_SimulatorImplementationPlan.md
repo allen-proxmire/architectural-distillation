@@ -5,7 +5,7 @@
 **Status:** Pre-code; defines module layout, skeletons, tests, and build order
 **Date filed:** June 2026
 **Author:** Allen Proxmire
-**Related:** `Phase_SimulatorDesign.md` (the design this operationalizes); `../Phase_TieBreak_Specification.md` (tie-break); `../Phase_Bits_DeterminabilityBoundaryMeasurementPlan.md` (the program & Δ)
+**Related:** `Phase_SimulatorDesign.md` (the design this operationalizes); `../../Phase_TieBreak_Specification.md` (tie-break); `../../Phase_Bits_DeterminabilityBoundaryMeasurementPlan.md` (the program & Δ)
 
 ---
 

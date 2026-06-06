@@ -232,7 +232,7 @@ python certify.py                  # runs all four gates -> "SIMULATOR: CERTIFIE
 python examples/delta_demo.py      # generates the ensemble -> Delta ~ 0.09 bits
 ```
 
-Both are deterministic given the seed bases. The build is documented step-by-step (`Phase_*.md`), each with a recorded-output results note (`*_Results.md`); the measurement specifically is `Phase_Delta_Implementation.md` and `Delta_Results.md`. Certification artifacts (gate summary, snapshot) are under `certification_output/`.
+Both are deterministic given the seed bases. The build is documented step-by-step under `docs/` (`docs/Phase_*.md`), each with a recorded-output results note (`docs/*_Results.md`); the measurement specifically is `docs/Phase_Delta_Implementation.md` and `docs/Delta_Results.md`. Certification artifacts (gate summary, snapshot) are under `certification_output/`.
 
 **Stack.** Python 3 with NumPy; pytest for the gates. No specialized hardware.
 
@@ -256,7 +256,7 @@ A configuration-independent value — the step that would make $\Delta$ a measur
 
 ## 11. Postscript: what the robustness sweeps settled
 
-The proof-of-method above measured Δ for one configuration and flagged the obvious next question: is the magnitude an intrinsic property of ED, or an artifact of the chosen substrate and observable? Two robustness sweeps answered it (`SizeSweep_Results.md`, `ObservableSweep_Results.md`).
+The proof-of-method above measured Δ for one configuration and flagged the obvious next question: is the magnitude an intrinsic property of ED, or an artifact of the chosen substrate and observable? Two robustness sweeps answered it (`docs/SizeSweep_Results.md`, `docs/ObservableSweep_Results.md`).
 
 - **Size and estimator.** The 2-bin histogram estimator made Δ *appear* to converge to ~0.92 bits across a 16× size range — but that was an estimator artifact: varying the bin count alone swung it 0.46–0.99. A binning-free k-nearest-neighbour (KSG) estimator, stable under its own parameter, gave **Δ ≈ 1.0 bit**, stable across size 16–256.
 - **Observable (the decisive test).** Holding size and estimator fixed and changing only *how the final state is read out*, Δ ranged from **0.17 to 0.98 bits** (summed ρ ≈ 0.98; per-node vectors ≈ 0.94; a local window ≈ 0.17; the gradient ≈ 0.36), each KSG-stable. **The ~1 bit was the information content of the `summed_rho` observable — not an intrinsic property of ED.** There is no single scalar "Δ for ED."
@@ -282,7 +282,7 @@ Testing that conjecture — whether an observable-*independent* object (a channe
 `evaluations/ED_Substrate/` — Memo_00 (scoping); Phase_A/A1/A2 (substrate-level AD criteria and extraction modes); Phase_B–E (architecture, envelope, extremal dynamics, constraint surface; the determinability boundary located at the decoupling surface); Phase_F (criteria verdict, 6/6); Phase_G (generalization); tie-break and orientation-primitivity closures.
 
 **This measurement (the empirical arc):**
-`evaluations/ED_Substrate/Bits/` — measurement plan; simulator design and implementation plan; build-step implementations and results notes (Milestone 1 through certification); `Phase_Delta_Implementation.md` and `Delta_Results.md` (the measurement); robustness sweeps `SizeSweep_Results.md`, `Phase_ObservableSweep_Implementation.md`, `ObservableSweep_Results.md` (§11); `README.md` (plain-language summary). Code: `simulator/`, `analysis/` (incl. KSG estimator and observables), `tests/`, `examples/` (incl. `size_sweep.py`, `observable_sweep.py`), `certify.py`.
+`evaluations/ED_Substrate/Bits/` — `README.md` (plain-language summary) and this paper at the root; `certify.py` (one-command verifier); code in `simulator/`, `analysis/` (incl. KSG estimator and observables), `tests/`, `examples/` (incl. `size_sweep.py`, `observable_sweep.py`). The full build narrative and results notes live in `docs/` — measurement plan, simulator design and implementation plan, build-step implementations and results (Milestone 1 through certification), `docs/Phase_Delta_Implementation.md` and `docs/Delta_Results.md` (the measurement), and the robustness sweeps `docs/SizeSweep_Results.md`, `docs/Phase_ObservableSweep_Implementation.md`, `docs/ObservableSweep_Results.md` (§11).
 
 **Motivating note:**
 `AD_Note_SubstrateBeneathTheShadow.md` — the finite-reach / determinability-boundary / projection-shadow motif shared (in form) by ED and the Factor Skyline programme.

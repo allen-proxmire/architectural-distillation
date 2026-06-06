@@ -5,7 +5,7 @@
 **Status:** Implementation begins; targets the first correctness gate (tie-break uniqueness)
 **Date filed:** June 2026
 **Author:** Allen Proxmire
-**Related:** `Phase_SimulatorDesign.md`; `Phase_SimulatorImplementationPlan.md` (build order §6, module specs §3); `../Phase_TieBreak_Specification.md`
+**Related:** `Phase_SimulatorDesign.md`; `Phase_SimulatorImplementationPlan.md` (build order §6, module specs §3); `../../Phase_TieBreak_Specification.md`
 
 ---
 

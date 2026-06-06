@@ -105,14 +105,21 @@ The whole evaluation rests on not fooling ourselves. The rules and tests were al
 
 ## Where everything lives
 
-Everything is in this folder (`evaluations/ED_Substrate/Bits/`) and committed to the repository:
+Everything is in this folder (`evaluations/ED_Substrate/Bits/`) and committed to the repository. The layout:
 
-- **`simulator/`** — the seven-module ED substrate simulator.
-- **`analysis/`** — the information-theory tools (entropy, mutual information, the Δ calculation).
-- **`tests/`** — the 20 automated correctness checks.
-- **`examples/`** — runnable demos, including the test case and the measurement driver.
-- **`certify.py`** — run this to re-verify the whole thing from scratch.
-- **The step-by-step record** — `Phase_*.md` (how each piece was built) and `*_Results.md` (what each run produced), ending in `Phase_Delta_Implementation.md` and `Delta_Results.md` (the measurement).
+```
+Bits/
+  README.md                                 <- this plain-language summary
+  ED_Determinability_Boundary_Measurement.md / .pdf   <- the publish-grade paper
+  certify.py                                <- run to re-verify the whole thing
+  simulator/   the seven-module ED substrate simulator
+  analysis/    information-theory tools (entropy, KSG MI, observables, the Δ calc)
+  tests/       the 20 automated correctness checks
+  examples/    runnable demos: the test case, the measurement driver, the sweeps
+  docs/        the full build narrative + results notes (see below)
+```
+
+- **`docs/`** — the step-by-step record: `Phase_*.md` (how each piece was built) and `*_Results.md` (what each run produced), from `Phase_SimulatorDesign.md` through `Phase_Delta_Implementation.md` / `Delta_Results.md` (the measurement) and the robustness sweeps (`SizeSweep_Results.md`, `ObservableSweep_Results.md`).
 
 To reproduce the whole result: run `python certify.py` (certifies the simulator), then `python examples/delta_demo.py` (produces the Δ number).
 
