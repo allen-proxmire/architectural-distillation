@@ -68,6 +68,72 @@ def mutual_information(x: np.ndarray, y: np.ndarray, bins: int = 2,
     return hx + hy - hxy
 
 
+def mutual_information_ksg(x: np.ndarray, y: np.ndarray, k: int = 3) -> float:
+    """Kraskov-Stoegbauer-Grassberger (KSG, estimator 1) mutual information, nats.
+
+    Binning-free k-nearest-neighbour estimator (Kraskov et al. 2004), suited to
+    continuous and strongly-dependent variables where histogram MI saturates or
+    is bin-dependent. For each point, find the k-th neighbour distance in the
+    joint space (max-norm), then count marginal neighbours within that radius:
+
+        MI = psi(k) + psi(N) - < psi(n_x + 1) + psi(n_y + 1) >
+
+    A tiny deterministic jitter breaks ties (continuous-variable assumption).
+    Returns max(MI, 0): MI is non-negative; KSG can dip slightly below 0 on
+    independent data, which we clip.
+    """
+    try:
+        from scipy.special import digamma
+    except Exception:  # pragma: no cover - fallback if scipy absent
+        digamma = _digamma_fallback
+
+    x = np.asarray(x, dtype=float).reshape(len(x), -1)
+    y = np.asarray(y, dtype=float).reshape(len(y), -1)
+    n = len(x)
+    assert len(y) == n and n > k
+
+    # Deterministic jitter (scaled to data) to break exact ties.
+    rng = np.random.default_rng(12345)
+    x = x + rng.normal(0.0, 1e-10, x.shape) * (np.std(x) + 1e-12)
+    y = y + rng.normal(0.0, 1e-10, y.shape) * (np.std(y) + 1e-12)
+    z = np.hstack([x, y])
+
+    # Pairwise max-norm (Chebyshev) distances.
+    dz = np.max(np.abs(z[:, None, :] - z[None, :, :]), axis=2)
+    dx = np.max(np.abs(x[:, None, :] - x[None, :, :]), axis=2)
+    dy = np.max(np.abs(y[:, None, :] - y[None, :, :]), axis=2)
+
+    nx = np.empty(n)
+    ny = np.empty(n)
+    for i in range(n):
+        d = dz[i].copy()
+        d[i] = np.inf
+        eps = np.partition(d, k - 1)[k - 1]      # distance to k-th neighbour
+        nx[i] = np.sum(dx[i] < eps) - 1          # exclude self
+        ny[i] = np.sum(dy[i] < eps) - 1
+
+    mi = (digamma(k) + digamma(n)
+          - np.mean(digamma(nx + 1) + digamma(ny + 1)))
+    return max(float(mi), 0.0)
+
+
+def _digamma_fallback(z):
+    """Digamma approximation (used only if scipy is unavailable)."""
+    z = np.asarray(z, dtype=float)
+    result = np.zeros_like(z)
+    # Shift up to z >= 6 using recurrence psi(z) = psi(z+1) - 1/z.
+    zz = z.copy()
+    while np.any(zz < 6):
+        m = zz < 6
+        result[m] -= 1.0 / zz[m]
+        zz[m] += 1.0
+    # Asymptotic series for large z.
+    f = 1.0 / zz
+    result += (np.log(zz) - 0.5 * f
+               - f * f * (1.0 / 12 - f * f * (1.0 / 120 - f * f / 252)))
+    return result
+
+
 def _quantile_edges(v: np.ndarray, bins: int) -> np.ndarray:
     """Bin edges at quantiles, so each bin holds ~equal mass (robust to scale)."""
     qs = np.linspace(0.0, 1.0, bins + 1)
