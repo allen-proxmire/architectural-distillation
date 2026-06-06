@@ -76,13 +76,19 @@ def apply_update(u: int, state: StateVector, graph: ParticipationGraph,
 
 def step(state: StateVector, graph: ParticipationGraph,
          coeffs: SigmaCoeffs = SigmaCoeffs(),
-         strata: dict[int, int] | None = None) -> int:
+         strata: dict[int, int] | None = None,
+         recorder=None, t: int | None = None) -> int:
     """One global step. Process active fronts in canonical (stratum_id, node_id)
     order; each commit is visible to later fronts in the same step (asynchronous).
 
     Stratum id source: the optional `strata` mapping if given, else each node's
     NodeState.stratum_id (populated by strata.assign_stratum_ids). Either way the
     order is deterministic and stratum-grouped.
+
+    Optional recording: if `recorder` is given, each commitment is logged via
+    recorder.log_commit(t, u, v) and a snapshot is taken after the step via
+    recorder.snapshot(t, state). `t` is the step index for the records. Recording
+    is read-only on state and does not affect the dynamics.
 
     Returns the number of commits this step (0 ⇒ fixed point: all fronts
     extinguished). A front that advances into a node this step does NOT take a
@@ -105,6 +111,14 @@ def step(state: StateVector, graph: ParticipationGraph,
         if v is not None:
             commits += 1
             newly_active.add(v)
+            if recorder is not None and t is not None:
+                recorder.log_commit(t, u, v)
+    # Snapshot only when the step changed the state. A zero-commit step is the
+    # terminal fixed point already captured at the previous step; recording it
+    # again would duplicate the stationary state (not a cycle). Skipping it keeps
+    # every recorded global state distinct (acyclicity, Gate 2).
+    if recorder is not None and t is not None and commits > 0:
+        recorder.snapshot(t, state)
     return commits
 
 

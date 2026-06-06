@@ -15,6 +15,7 @@ from .boundary import (
     detect_boundary_nodes,
     boundary_map,
 )
+from .recorder import HistoryRecorder
 
 __all__ = [
     "ParticipationGraph",
@@ -33,4 +34,5 @@ __all__ = [
     "detect_decoupled_edges",
     "detect_boundary_nodes",
     "boundary_map",
+    "HistoryRecorder",
 ]

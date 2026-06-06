@@ -1,3 +1,4 @@
 __pycache__/
 *.pyc
 *.npz
+certification_output/certification_log.txt
