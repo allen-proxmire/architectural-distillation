@@ -6,7 +6,7 @@
 
 ## Verdict (one line)
 
-**The certified ED substrate is a kinetic lattice-gas — ballistic worldlines scattering off ρ-disorder, depositing a slaved ρ field — NOT a diffusion PDE and NOT a closed scalar PDE.** The Q-C / UDM diffusion is a different ED model, at most an over-damped limit. Qualitative verdict solid; quantitative continuum closure is measurement-limited (a dedicated Round-4 study).
+**The certified ED substrate is a kinetic lattice-gas (ballistic worldlines + disorder scattering, isotropic fast-relaxing equilibrium, slaved ρ) — NOT diffusion, NOT a closed scalar PDE; and it does NOT generate the UDM mobility law (β≈0, not β≈2 — avoidance, not blocking).** Qualitative kinetic verdict solid; quantitative continuum closure unachieved across R1–4; the saturation/extinction mechanism is the one live UDM fork (Round 5). The program's clearest *tested* negative.
 
 ## Contents
 
@@ -16,6 +16,7 @@
 | `coarsegrain_test.py` | Round 1 — PDE-class regression + single-chain straightness |
 | `coarsegrain_round2.py` | Round 2 — `(ρ,φ,J)` transport closure; single-chain drift `v`, diffusion `D` |
 | `coarsegrain_round3.py` | Round 3 — merge (collision) operator; directional persistence; scaling |
+| `coarsegrain_round4.py` | Round 4 — ensemble + matched space-time coarsening; velocity-resolved BGK; UDM (mobility-vs-concentration) test |
 | `docs/CoarseGrain_Round1_Results.md` | Round-1 results note (superseded by the paper for synthesis) |
 
 ## The robust core (survived all three rounds, two self-corrections)
