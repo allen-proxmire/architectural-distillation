@@ -14,6 +14,7 @@
 | Step 3 — sourcing test: does the winding source a field (Gauss's law)? | `docs/B4_Step3_Results_Sourcing.md` + `sourcing_test.py` | **Done** |
 | Step 4 — relax orientation-blindness for a determined local field? (ontology fork) | `docs/B4_Step4_Results_OrientationRelaxation.md` + `relaxation_test.py` | **Done** |
 | Context — how ED-I-05/06 (magnetism, fields & forces) frame the result | `docs/B4_Related_ED-I_Material.md` | Context note (flagged hypotheses, NOT verdict) |
+| Round 5 — reframe: the negative half was a LAYER error (continuum field sought at the discrete layer) | `docs/B4_Round5_Reframe_LatticeToContinuum.md` | Reframe (discrete results unchanged; Steps 3–4 reinterpreted) |
 
 ## Arc verdict (COMPLETE, after Steps 1–3)
 
@@ -31,3 +32,5 @@
 **Step 4 (ontology fork) closes the question:** a determined local field (Coulomb-like 1/r²) is blocked by **two** invariants, not one. Relaxing orientation-blindness alone (Σ sees coherence, P11 kept) gives a **sweep-dependent seam, not a field** (sweep-dependence 0.76). A determined isotropic 1/r² field appears **only when P11 irreversibility is also removed** (deficit·r²≈0.126, init-independent 0.0005) — but that is XY/lattice-field relaxation, **no longer ED**. Complementarity: ED's two signature commitments (orientation-blind selection + irreversible commitment) are *precisely* what make it a determinacy engine **and** *precisely* what foreclose a continuous determined field. The same architecture does both.
 
 **Recommendation:** ARC COMPLETE (4 steps). The metrical field is **outside ED by construction** — charge-as-topology is realized at the topological level and provably not extendable to the metrical level without ceasing to be ED. This is the strongest honest form of "ED is not a TOE" for the charge case: the boundary is *mechanistically explained by which invariants block which content.*
+
+> **Round-5 reframe (`docs/B4_Round5_Reframe_LatticeToContinuum.md`):** the *discrete results above are unchanged*, but the **negative half (Steps 3–4) is reinterpreted as a layer error** — it sought a *continuum* object (the local Coulomb field) at the *discrete* layer, where it correctly does not live. Read as lattice gauge theory, the holonomies are **link variables** and the Coulomb field is their **DCGT continuum limit**; the latent **Maxwell-like action is already present** in the coherence term `cos²(Δφ/2)`. So "outside ED by construction" is reframed as **"one layer up, in the coarse-grained limit"**, and the real open question replaces "ED would have to break itself" with: *does ED's DCGT measure yield Maxwell/Coulomb as the continuum limit of the holonomies?* (No Maxwell derivation claimed.)
